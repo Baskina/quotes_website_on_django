@@ -1,0 +1,33 @@
+{% extends "quotesapp/base.html" %}
+
+{% block content %}
+
+<form method="POST" action="{% url 'quotesapp:add-quote' %}">
+    {% csrf_token %}
+    <div style="padding: 10px">
+        <label>Enter the quote text:
+            {{form.quote}}
+        </label>
+        <span>{{ form.errors.quote }}</span>
+    </div>
+    <div style="padding: 10px">
+        <label>Choose the author:</label>
+        <select name="author">
+            options:
+            {% for value in form.fields.author.choices %}
+                <option value="{{value.id}}">{{value.id}}</option>
+            {% endfor %}
+
+        </select>
+    </div>
+    <div style="padding: 10px">
+        <label>Enter tags:</label>
+        <input type="text" name="tags" value="{{form.tags.value|join:', '}}" placeholder="Enter tags separated by comma">
+    </div>
+    <div class="grid">
+        <button type="submit">Submit</button>
+        <button type="reset" class="secondary">Reset</button>
+    </div>
+</form>
+
+{% endblock %}
