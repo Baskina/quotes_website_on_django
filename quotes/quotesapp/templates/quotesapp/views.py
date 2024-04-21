@@ -1,7 +1,9 @@
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 
-from quotesapp.models import Quote
+from quotesapp.models import Quote, Tag
+from authorsapp.models import Author
 from quotesapp.templates.quotesapp.forms import QuoteForm
 
 
@@ -17,6 +19,7 @@ def main(request, page=1):
     return render(request, 'quotesapp/index.html', context={'quotes': quotes_on_page})
 
 
+@login_required()
 def addQuote(request):
     if request.method == 'POST':
         form = QuoteForm(request.POST)
@@ -24,6 +27,6 @@ def addQuote(request):
             form.save()
             return redirect('quotesapp:main')
         else:
-            return render(request, 'quotesapp/addQuote.html', {'form': form})
+            return render(request, 'quotesapp/addQuote.html', {'form_quote': form})
 
-    return render(request, 'quotesapp/addQuote.html', {'form': QuoteForm()})
+    return render(request, 'quotesapp/addQuote.html', {'form_quote': QuoteForm(), 'authors': Author.objects.all(), 'tags': Tag.objects.all()})

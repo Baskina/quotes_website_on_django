@@ -6,23 +6,28 @@
     {% csrf_token %}
     <div style="padding: 10px">
         <label>Enter the quote text:
-            {{form.quote}}
+            {{form_quote.quote}}
         </label>
-        <span>{{ form.errors.quote }}</span>
+        <span>{{ form_quote.errors.quote }}</span>
     </div>
     <div style="padding: 10px">
         <label>Choose the author:</label>
         <select name="author">
             options:
-            {% for value in form.fields.author.choices %}
-                <option value="{{value.id}}">{{value.id}}</option>
+            {% for value in authors %}
+                <option value="{{value.id}}">{{value.fullname}}</option>
             {% endfor %}
 
         </select>
     </div>
     <div style="padding: 10px">
         <label>Enter tags:</label>
-        <input type="text" name="tags" value="{{form.tags.value|join:', '}}" placeholder="Enter tags separated by comma">
+        <select name="tags" multiple>
+            options:
+            {% for value in tags %}
+                <option value="{{value.id}}">{{value.name}}</option>
+            {% endfor %}
+        </select>
     </div>
     <div class="grid">
         <button type="submit">Submit</button>
