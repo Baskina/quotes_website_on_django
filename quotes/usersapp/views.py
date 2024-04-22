@@ -33,6 +33,7 @@ def loginuser(request):
 
     return render(request, 'usersapp/loginuser.html', context={'form': UserLoginForm()})
 
+
 @login_required()
 def logoutuser(request):
     logout(request)
