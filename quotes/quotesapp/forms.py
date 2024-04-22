@@ -1,4 +1,3 @@
-from django.contrib.auth.decorators import login_required
 from django.contrib.postgres.fields import ArrayField
 from django.forms import ModelForm, CharField, TextInput, ModelChoiceField
 
